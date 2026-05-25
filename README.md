@@ -18,7 +18,7 @@ Following the attack, I securely extracted the auth.log file over the network. A
 
 
 ### Phase 3: The Detection (Blue Team Automation)
-To triage the aftermath, I ran the custom Python parser. The script successfully chewed through the raw logs, extracted the IPs, tracked the failure counts, and triggered a SOC alarm for the exact attacker IP.
+To triage the aftermath, I ran the custom Python parser. The script successfully ran through the raw logs, extracted the IPs, tracked the failure counts, and triggered a SOC alarm for the exact attacker IP.
 
 <img width="806" height="188" alt="Screenshot 2026-05-25 040218" src="https://github.com/user-attachments/assets/c35b1927-ad90-44b6-8cf3-7c4fe56dd83d" />
 
@@ -31,10 +31,10 @@ The Problem: Cryptographic Deprecation (Legacy SSH Protocols)
 During the lab execution, my modern attacker machine (Kali Linux) and my host machine (Windows) both actively refused to connect to the victim machine (Metasploitable 2) over SSH. I received kex error : no match for method mac algo and no matching host key type found errors.
 
 The Root Cause:
-Modern operating systems are configured with strict security baselines out-of-the-box and actively block legacy, insecure encryption algorithms (like ssh-rsa and hmac-md5). Metasploitable 2 is an intentionally vulnerable legacy server, so the modern machines refused to lower their security standards to communicate with it.
+Modern operating systems are configured with strict security baselines out-of-the-box and actively block legacy, insecure encryption algorithms (like ssh-rsa and hmac-md5). Metasploitable 2 is an intentionally vulnerable legacy server, because of which the modern machines refused to lower their security standards to communicate with it.
 
 The Engineering Solutions:
 To successfully execute the attack and extract the forensic data, I had to deliberately force my modern tools to accept legacy protocols:
 
-1. Kali Linux (The Attacker): I utilized the kali-tweaks command-line utility, navigated to the Hardening menu, and enabled Wide Compatibility for the SSH client. This allowed Hydra to successfully negotiate the connection and brute-force the server.
+1. Kali Linux (The Attacker): I utilized the kali-tweaks command-line utility, navigated to the Hardening menu, and enabled Wide Compatibility for the SSH client. This allowed Hydra to successfully secure the connection and brute-force the server.
 2. Windows Host (The Defender): To securely extract the auth.log file over the network, I had to bypass Windows' strict SSH key checking. I added a specific parameter to my Secure Copy command to temporarily allow legacy RSA keys: scp -o HostKeyAlgorithms=+ssh-rsa msfadmin@[TARGET_IP]:/var/log/auth.log ./auth.log

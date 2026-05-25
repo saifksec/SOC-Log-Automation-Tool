@@ -13,7 +13,8 @@ To validate the tool, I generated real attack traffic using Hydra to launch an S
 ### Phase 2: The Evidence (Log Extraction)
 Following the attack, I securely extracted the auth.log file over the network. As seen below, manually reviewing thousands of lines of raw system logs is highly inefficient for a SOC team.
 <img width="1047" height="218" alt="Screenshot 2026-05-25 040013" src="https://github.com/user-attachments/assets/0d7ab0ad-81e6-4bd8-b2a4-df2d50c974b3" />
-<img width="1556" height="990" alt="Screenshot 2026-05-25 040121" src="https://github.com/user-attachments/assets/ccf6c4fb-6071-4621-8272-c50f9c96b55f" />
+<img width="1269" height="1015" alt="Screenshot 2026-05-25 175453" src="https://github.com/user-attachments/assets/c0e9bc33-56e7-45e1-96f2-32c5e0ef164a" />
+
 
 
 ### Phase 3: The Detection (Blue Team Automation)
@@ -24,7 +25,7 @@ To triage the aftermath, I ran the custom Python parser. The script successfully
 
 ---
 
-### 🚧 Challenges Encountered & Troubleshooting
+###  Challenges Encountered & Troubleshooting
 
 The Problem: Cryptographic Deprecation (Legacy SSH Protocols)
 During the lab execution, my modern attacker machine (Kali Linux) and my host machine (Windows) both actively refused to connect to the victim machine (Metasploitable 2) over SSH. I received kex error : no match for method mac algo and no matching host key type found errors.
